@@ -128,7 +128,7 @@ public class ComunicacionServidor {
         }
         return null;
     }
-    
+
     public String insertarSorteo(Sorteo s) throws ExcepcionTradeT {
         HashMap peticion = new HashMap();
 
@@ -162,7 +162,7 @@ public class ComunicacionServidor {
         }
         return null;
     }
-    
+
     public String modificarSorteo(Sorteo s) throws ExcepcionTradeT {
         HashMap peticion = new HashMap();
 
@@ -196,7 +196,7 @@ public class ComunicacionServidor {
         }
         return null;
     }
-    
+
     public String eliminarSorteo(Sorteo s) throws ExcepcionTradeT {
         HashMap peticion = new HashMap();
 
@@ -230,7 +230,7 @@ public class ComunicacionServidor {
         }
         return null;
     }
-    
+
     public ArrayList<Sorteo> leerSorteos() throws ExcepcionTradeT {
         HashMap peticion = new HashMap();
         peticion.put("peticion", "leer sorteos");
@@ -266,5 +266,54 @@ public class ComunicacionServidor {
             Logger.getLogger(ComunicacionServidor.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public boolean hacerCopia() {
+        
+            HashMap peticion = new HashMap();
+            peticion.put("peticion", "hacer copia");
+        try {    
+            Socket socket;
+            socket = new Socket(IP, PUERTO);
+            ObjectOutputStream flujoSalida = new ObjectOutputStream(socket.getOutputStream());
+            flujoSalida.writeObject(peticion);
+            flujoSalida.flush();
+            ObjectInputStream flujoEntrada = new ObjectInputStream(socket.getInputStream());
+            Object resultado = flujoEntrada.readObject();
+            if(((String)resultado).equals("ok")){
+                return true;
+            } else{
+                return false;
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ComunicacionServidor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ComunicacionServidor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    public boolean restaurarCopia() {
+        
+            HashMap peticion = new HashMap();
+            peticion.put("peticion", "restaurar copia");
+        try {    
+            Socket socket;
+            socket = new Socket(IP, PUERTO);
+            ObjectOutputStream flujoSalida = new ObjectOutputStream(socket.getOutputStream());
+            flujoSalida.writeObject(peticion);
+            flujoSalida.flush();
+            ObjectInputStream flujoEntrada = new ObjectInputStream(socket.getInputStream());
+            Object resultado = flujoEntrada.readObject();
+            if(((String)resultado).equals("ok")){
+                return true;
+            } else{
+                return false;
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ComunicacionServidor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ComunicacionServidor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }

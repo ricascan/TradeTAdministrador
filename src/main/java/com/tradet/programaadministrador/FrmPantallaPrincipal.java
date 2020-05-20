@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -80,6 +81,11 @@ public class FrmPantallaPrincipal extends javax.swing.JFrame {
 
         btnRestaurarCopia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnRestaurarCopia.setText("Restaurar copia de seguridad de la base de datos");
+        btnRestaurarCopia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRestaurarCopiaActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnRestaurarCopia);
 
         pack();
@@ -96,8 +102,31 @@ public class FrmPantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSorteosActionPerformed
 
     private void btnHacerCopiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHacerCopiaActionPerformed
-       
+       ComunicacionServidor comunicacionServidor = new ComunicacionServidor();
+       if(comunicacionServidor.hacerCopia()){
+           
+            JOptionPane.showMessageDialog(this,
+                    "Copia de seguridad realizada correctamente.");
+       } else{
+           JOptionPane.showMessageDialog(this,
+                    "Ha ocurrido un error al realizar la copia de seguridad, por favor consulte con el administrador",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+       }
     }//GEN-LAST:event_btnHacerCopiaActionPerformed
+
+    private void btnRestaurarCopiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarCopiaActionPerformed
+        ComunicacionServidor comunicacionServidor = new ComunicacionServidor();
+        if(comunicacionServidor.restaurarCopia()){
+            JOptionPane.showMessageDialog(this,
+                    "Copia de seguridad restaurada correctamente.");
+        }else{
+            JOptionPane.showMessageDialog(this,
+                    "Ha ocurrido un error al restaurar la copia de seguridad, por favor consulte con el administrador",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnRestaurarCopiaActionPerformed
 
     /**
      * @param args the command line arguments
